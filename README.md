@@ -1,81 +1,84 @@
 Translation Management API
 
-A Laravel-based API service for managing multi-language translations with tagging, search, and fast JSON export.
+A high-performance Laravel-based API service for managing multi-language translations with tagging, search capabilities, and optimized JSON export for frontend applications.
 
-Setup Instructions
+🚀 Key Features
+Multi-language translation support (e.g., EN, FR, ES)
+Dynamic language expansion (no schema changes required)
+Tag-based categorization (web, mobile, desktop)
+Fast search by key, content, or tags
+Optimized JSON export for SPA applications (Vue.js / React)
+Token-based authentication using Laravel Sanctum
+Designed for large-scale datasets (100K+ records)
 
-1. Clone project
+⚙️ Setup Instructions
+1. Clone Repository
 git clone <repo-url>
 cd project-folder
-2. Install dependencies
+2. Install Dependencies
 composer install
-3. Copy environment file
+3. Environment Setup
 cp .env.example .env
-4. Generate app key
 php artisan key:generate
-5. Configure database
+4. Configure Database
 
 Update .env:
 
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=translations
+DB_DATABASE=translationsdb
 DB_USERNAME=laravel
-DB_PASSWORD=secret
+DB_PASSWORD=
 
-6. Run migrations
+5. Run Migrations
 php artisan migrate
-7. Seed test data (100K records)
+6. Seed Large Dataset (100K records)
 php artisan db:seed --class=TranslationSeeder
-8. Run server
+7. Run Application
 php artisan serve
 
-API will be available at:
+Application URL:
 
 http://localhost:8000
 
-(Optional) Docker Setup
+Docker Setup (Optional)
+
 docker-compose up -d --build
-Run tests
+
+Testing
+
+Run all tests:
 
 php artisan test
 
-API Overview
+Includes:
 
-Authentication
+Feature tests (API endpoints)
+Authentication tests
+Performance validation
+📡 API Overview
+🔐 Authentication
 
 Uses Laravel Sanctum (token-based authentication)
 
 Authorization: Bearer {token}
-Endpoints
+📍 Endpoints
 Translations
-GET /api/translations
-POST /api/translations
-PUT /api/translations/{id}
-GET /api/translations/search
+GET    /api/translations
+POST   /api/translations
+PUT    /api/translations/{id}
+GET    /api/translations/search
 Export
 GET /api/translations/export
 
-Returns grouped JSON per locale.
+Response:
 
-🧠 Design Choices
-1. Service Layer Architecture
-
-Business logic is separated from controllers to keep the code clean, reusable, and testable.
-
-2. Scalable Database Structure
-t_key + locale unique constraint ensures no duplicate translations
-Indexed fields (t_key, locale) improve query performance
-3. Tag System (Many-to-Many)
-
-Translations can have multiple tags for flexible categorization (web, mobile, desktop).
-
-4. Performance Optimization
-Indexed queries
-Selective data fetching
-Cached export-ready structure (for large datasets)
-Designed to handle 100K+ records efficiently
-5. JSON Export Design
-
-Grouped by locale to allow fast frontend consumption (Vue.js / SPA ready).
+{
+  "en": {
+    "hello": "Hello World"
+  },
+  "fr": {
+    "hello": "Bonjour"
+  }
+}
